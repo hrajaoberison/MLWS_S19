@@ -57,7 +57,9 @@ M_z = np.matrix(M_z)
 
 # Generate image data by varying Defocus distance(dz), in m
 dz = np.linspace(0.3*10**-3, 1.8*10**-3, num = 6)
+rmse = []
 for dz_row in dz:    
+    print(dz_row)
     NA = 0.1
     Lambda = 1.053*10**-6
     Nff_pts = 64
@@ -108,7 +110,6 @@ for dz_row in dz:
     rawData = []
     # dataSet = TemporaryFile()
     # Loop through and generate images
-    A = M_z.shape[0]
     for ii in tqdm(range(0, M_z.shape[0])):
         # Generate wavefront map for this iteration
         M_zy = M_z[ii,:]
@@ -121,8 +122,9 @@ for dz_row in dz:
         im4 = plt.imshow(Wm, extent=extent4, cmap ='jet')
         plt.colorbar(im4)
     
-        # Generate defocused far-field irradiance
-        E_ff, x_ff, y_ff = Image_Generation_script(*arg1)
+        # Generate defocused far-field irradiance\
+        args2 = (np.sqrt(Im)*np.exp(2j*np.pi*Wm), xv*NA, yv*NA, xfv, yfv, Lambda, 1, dz_row)
+        E_ff, x_ff, y_ff = Image_Generation_script(*args2)
         I_ff = np.square(np.abs(E_ff))
         I_ff = I_ff/np.max(I_ff.flatten(order = 'F'))
     
@@ -168,8 +170,6 @@ for dz_row in dz:
     # Normally we would subtract by the mean then divide by the standard deviation of the data to normalize,
     # but since we're using an image as input we can take a shortcut and just divide by 255
     X = X / 255
-
-    rmse = []
     
     # Trains a NN with the given hyperparameters and dataset. X.shape = (m, n) and Y.shape = (m, k) where k is outputs.
     # returns an MLPRegressor, which you can find predictions from using mlp.predict(X)
@@ -232,7 +232,7 @@ for dz_row in dz:
     # Given a trained MLPRegressor, find the Root Mean Squared Error of the dataset
     rms_error = np.sqrt(mean_squared_error(Y_test, Y_predict))
     print(f"RMSE{[dz_row]}: ", rms_error)
-    rmse = np.vstack((rmse, rms_error))
+    rmse = np.hstack((rmse, rms_error))
 
 fig, ax = plt.subplots()
 ax.plot(dz, rmse)

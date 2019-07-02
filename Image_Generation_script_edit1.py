@@ -97,10 +97,10 @@ def ZernikeReconstruct(Xm, Ym, Zv):
     Pm[3:4] = 2*np.square(Rhov)-1          # Z3, defocus
     Pm[4:5] = np.square(Rhov)*np.cos(2*Thetav) # Z4, 45-deg astig.
     Pm[5:6] = np.square(Rhov)*np.sin(2*Thetav)    # Z5, 45-deg astig.
-#    Pm[6:7] = (3*matrix_power(Rhov, 3)-2*Rhov)*np.cos(Thetav)    # Z6, x coma
-#    Pm[7:8] = (3*matrix_power(Rhov, 3)-2*Rhov)*np.sin(Thetav)    # Z7, y coma
-#    Pm[8:9] = 6*matrix_power(Rhov, 4)-6*matrix_power(Rhov, 2)+1    # Z8, spherical
-#    Pm[9:10] = matrix_power(Rhov, 3)*np.cos(3*Thetav)    # Z9
+    # Pm[6:7] = (3*matrix_power(Rhov, 3)-2*Rhov)*np.cos(Thetav)    # Z6, x coma
+    # Pm[7:8] = (3*matrix_power(Rhov, 3)-2*Rhov)*np.sin(Thetav)    # Z7, y coma
+    # Pm[8:9] = 6*matrix_power(Rhov, 4)-6*matrix_power(Rhov, 2)+1    # Z8, spherical
+    # Pm[9:10] = matrix_power(Rhov, 3)*np.cos(3*Thetav)    # Z9
 #    Pm[10:11] = matrix_power(Rhov, 3)*np.sin(3*Thetav)    # Z10
 #    Pm[11:12] = (4*matrix_power(Rhov, 4)-3*matrix_power(Rhov, 2))*np.cos(2*Thetav)  # Z11
 #    Pm[12:13] = (4*matrix_power(Rhov, 4)-3*matrix_power(Rhov, 2))*np.sin(2*Thetav)  # Z12
