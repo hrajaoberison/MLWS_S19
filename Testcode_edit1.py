@@ -56,7 +56,7 @@ M_z = pd.read_csv(filepath)
 M_z = np.matrix(M_z)
 
 # Generate image data by varying Defocus distance(dz), in m
-dz = np.linspace(0.3*10**-3, 1.8*10**-3, num = 6)
+dz = np.linspace(1.8*10**-3, 2.5*10**-3, num = 4)
 rmse = []
 for dz_row in dz:    
     print(dz_row)
@@ -236,7 +236,7 @@ for dz_row in dz:
 
 fig, ax = plt.subplots()
 ax.plot(dz, rmse)
-ax.set_xlabel('Defocus distance [mm]')
+ax.set_xlabel('Defocus distance [m]')
 ax.set_ylabel('Root Mean Squared Error')
 ax.set_title('Root Mean Squared Error Plot')
 plt.show()
