@@ -18,26 +18,26 @@ def Image_Generation_script(En, x, y, xf, yf, wavelength, f, dz):
     if y.shape[0] != 1:
         warnings.warn("Error: y vector must be a vector")
 
-    if len(Testcode_edit1.arg1) < 5:
+    if len(Testcode_edit1.args1) < 5:
         wavelength = 1.053*10**-6
 
-    if len(Testcode_edit1.arg1) < 6:
+    if len(Testcode_edit1.args1) < 6:
         f = 1
 
-    if len(Testcode_edit1.arg1) < 7:
+    if len(Testcode_edit1.args1) < 7:
         dz = 0
 
     # Get the difference and mean between elements of vectors x and y respectively
     dx = np.mean(np.diff(x))
     dy = np.mean(np.diff(y))
 
-    if len(Testcode_edit1.arg1) < 3: 
+    if len(Testcode_edit1.args1) < 3: 
         if Nx % 2:
             xf = (np.arange(-Nx+1,Nx-1,2))*wavelength*f/(2*Nx*dx)
         else:
             xf = (np.arange(-Nx,Nx-2,2))*wavelength*f/(2*Nx*dx)
 
-    if len(Testcode_edit1.arg1) < 4: 
+    if len(Testcode_edit1.args1) < 4: 
         if Ny % 2:
             yf = (np.arange(-Ny+1,Ny-1,2))*wavelength*f/(2*Ny*dy)
         else:
@@ -97,16 +97,16 @@ def ZernikeReconstruct(Xm, Ym, Zv):
     Pm[3:4] = 2*np.square(Rhov)-1          # Z3, defocus
     Pm[4:5] = np.square(Rhov)*np.cos(2*Thetav) # Z4, 45-deg astig.
     Pm[5:6] = np.square(Rhov)*np.sin(2*Thetav)    # Z5, 45-deg astig.
-    # Pm[6:7] = (3*matrix_power(Rhov, 3)-2*Rhov)*np.cos(Thetav)    # Z6, x coma
-    # Pm[7:8] = (3*matrix_power(Rhov, 3)-2*Rhov)*np.sin(Thetav)    # Z7, y coma
-    # Pm[8:9] = 6*matrix_power(Rhov, 4)-6*matrix_power(Rhov, 2)+1    # Z8, spherical
-    # Pm[9:10] = matrix_power(Rhov, 3)*np.cos(3*Thetav)    # Z9
-#    Pm[10:11] = matrix_power(Rhov, 3)*np.sin(3*Thetav)    # Z10
-#    Pm[11:12] = (4*matrix_power(Rhov, 4)-3*matrix_power(Rhov, 2))*np.cos(2*Thetav)  # Z11
-#    Pm[12:13] = (4*matrix_power(Rhov, 4)-3*matrix_power(Rhov, 2))*np.sin(2*Thetav)  # Z12
-#    Pm[13:14] = (10*matrix_power(Rhov, 5)-12*matrix_power(Rhov, 3)+3*Rhov)*np.cos(Thetav)  # Z13
-#    Pm[14:15] = (10*matrix_power(Rhov, 5)-12*matrix_power(Rhov, 3)+3*Rhov)*np.sin(Thetav)  # Z14
-#    Pm[15:16] = 20*matrix_power(Rhov, 6)-30*matrix_power(Rhov, 4)+12*matrix_power(Rhov, 2)-1    # Z15
+    Pm[6:7] = (3*Rhov**3-2*Rhov)*np.cos(Thetav)    # Z6, x coma
+    Pm[7:8] = (3*Rhov**3-2*Rhov)*np.sin(Thetav)    # Z7, y coma
+    Pm[8:9] = 6*Rhov**4-6*Rhov**2+1    # Z8, spherical
+    Pm[9:10] = Rhov**3*np.cos(3*Thetav)    # Z9
+    Pm[10:11] = Rhov**3*np.sin(3*Thetav)    # Z10
+    Pm[11:12] = (4*Rhov**4-3*Rhov**2)*np.cos(2*Thetav)  # Z11
+    Pm[12:13] = (4*Rhov**4-3*Rhov**2)*np.sin(2*Thetav)  # Z12
+    Pm[13:14] = (10*Rhov**5-12*Rhov**3+3*Rhov)*np.cos(Thetav)  # Z13
+    Pm[14:15] = (10*Rhov**5-12*Rhov**3+3*Rhov)*np.sin(Thetav)  # Z14
+    Pm[15:16] = 20*Rhov**6-30*Rhov**4+12*Rhov**2-1    # Z15
     Pm = np.transpose(Pm)
     if Zv.shape[0]<16:
         Pm = Pm[:,:Zv.shape[0]] # delete columns of Pm starting from Zv.shape[0]+1  

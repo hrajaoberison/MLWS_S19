@@ -123,8 +123,8 @@ for dz_row in dz:
         plt.colorbar(im4)
     
         # Generate defocused far-field irradiance\
-        args2 = (np.sqrt(Im)*np.exp(2j*np.pi*Wm), xv*NA, yv*NA, xfv, yfv, Lambda, 1, dz_row)
-        E_ff, x_ff, y_ff = Image_Generation_script(*args2)
+        args1 = (np.sqrt(Im)*np.exp(2j*np.pi*Wm), xv*NA, yv*NA, xfv, yfv, Lambda, 1, dz_row)
+        E_ff, x_ff, y_ff = Image_Generation_script(*args1)
         I_ff = np.square(np.abs(E_ff))
         I_ff = I_ff/np.max(I_ff.flatten(order = 'F'))
     
