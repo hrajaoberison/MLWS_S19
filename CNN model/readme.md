@@ -1,3 +1,5 @@
+## CNN model
+
 This folder contains two scripts:
 
 ImageDataPreprocessing.py: Open images (.bmp) file and convert them to a 4D numpy array file of shape (N_img, height, width, channel). 
