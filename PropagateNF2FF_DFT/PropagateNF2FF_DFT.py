@@ -1,8 +1,6 @@
 ###### Written by Heri Rajaoberison ######
-import sys
 import numpy as np
 import warnings
-import matplotlib.pyplot as plt
 import GeneratesArrays
   
 def PropagateNF2FF_DFT(En, x, y, xf, yf, wavelength, f, dz):

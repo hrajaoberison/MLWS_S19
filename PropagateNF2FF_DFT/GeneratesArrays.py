@@ -1,8 +1,6 @@
 ####### Written by Heri Rajaoberison ######
 #  Generates arrays to be fed into PropagateNF2FF_DFT.m
-import sys
 import numpy as np
-import warnings
 import matplotlib.pyplot as plt
 from PropagateNF2FF_DFT import PropagateNF2FF_DFT
 
