@@ -83,11 +83,10 @@ def ZernikeReconstruct(Xm, Ym, Zv):
     Thetam = np.arctan2(Ym,Xm)
     
     Mp = Rhom<=1
-    Mp = Mp.astype(np.int)
     Wm = np.zeros(Xm.shape)
     
-    Rhov = np.array([Rhom[Rhom<=1].flatten('F')])
-    Thetav = np.array([Thetam[Rhom<=1].flatten('F')])
+    Thetav = np.array([Thetam.flatten('F')[Mp.flatten('F')]])
+    Rhov = np.array([Rhom.flatten('F')[Mp.flatten('F')]])
     
     # Define Zernike polynomial terms with 0-15 rows
     Pm = np.empty((Thetav.shape[1],Thetav.shape[1]))
@@ -112,5 +111,5 @@ def ZernikeReconstruct(Xm, Ym, Zv):
         Pm = Pm[:,:Zv.shape[0]] # delete columns of Pm starting from Zv.shape[0]+1  
     Zm = np.matmul(Pm, Zv) # a column vector = multiple rows same as Pm rows.
     Wm[Rhom<=1] = np.sum(Zm, axis = 1)
-    Wm = np.flipud(Wm)
+    Wm = np.rot90(Wm)
     return Wm
