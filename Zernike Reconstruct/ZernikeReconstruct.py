@@ -5,24 +5,16 @@ def ZernikeReconstruct(Xm, Ym, Zv):
     # Make sure Zv is a column vector
     if Zv.shape[1] != 1 or Zv.shape[0] < Zv.shape[1]:
         Zv= np.reshape(Zv, (Zv.shape[1],1))
-    print("Zv=", Zv.shape)
-
+        
     # Define pupil (all real-valued Wm within unit circle)
     Rhom = np.sqrt(Xm**2+Ym**2)
     Thetam = np.arctan2(Ym,Xm)
-    print("Thetam=", np.max(Thetam))
-    print("Rhom=", np.min(Rhom))
     
     Mp = Rhom<=1
-    Mp = Mp.astype(np.int)
-    print("Mp=", Mp.shape)
     Wm = np.zeros(Xm.shape)
-    print("Wm=", Wm.shape)
     
-    Rhov = np.array([Rhom[Rhom<=1].flatten('F')])
-    Thetav = np.array([Thetam[Rhom<=1].flatten('F')])
-    print("Rhov=", Rhov.shape)
-    print("Thetav=", Thetav.shape)
+    Thetav = np.array([Thetam.flatten('F')[Mp.flatten('F')]])
+    Rhov = np.array([Rhom.flatten('F')[Mp.flatten('F')]])
     
     # Define Zernike polynomial terms with 0-15 rows
     Pm = np.empty((Thetav.shape[1],Thetav.shape[1]))
@@ -45,12 +37,9 @@ def ZernikeReconstruct(Xm, Ym, Zv):
     Pm = np.transpose(Pm)
     if Zv.shape[0]<16:
         Pm = Pm[:,:Zv.shape[0]] # delete columns of Pm starting from Zv.shape[0]+1  
-    print("Zv=", Zv.shape)
-    print("Pm=", Pm.shape)
     Zm = np.matmul(Pm, Zv) # a column vector = multiple rows same as Pm rows.
-    print("Zm=", Zm)
     Wm[Rhom<=1] = np.sum(Zm, axis = 1)
-    print("Wm=", Wm)
+    Wm = np.rot90(Wm)
     return Wm
 
 if __name__ == "__main__":  
